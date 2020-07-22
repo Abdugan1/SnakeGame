@@ -58,7 +58,7 @@ Gamefield::Gamefield() : _field(HEIGHT)
 	{
 		_field[i].resize(WIDTH);
 	}
-
+// Start making borders
 	for (size_t i = 0; i < WIDTH; i++)
 	{
 		_field[0][i] = '#';
@@ -78,7 +78,7 @@ Gamefield::Gamefield() : _field(HEIGHT)
 	{
 		_field[HEIGHT - 1][i] = '#';
 	}
-
+// End making borders
 	_game_status = false;
 	_score = 0;
 }
