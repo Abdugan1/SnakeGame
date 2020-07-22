@@ -13,7 +13,6 @@ private:
 		UP, DOWN, LEFT, RIGHT
 	} _dir;
 
-	//	Private Methods
 	void MoveLogic();
 	void RotationLogic(const Direction& prev_dir);
 public:

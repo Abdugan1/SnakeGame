@@ -9,11 +9,14 @@ int main() {
 	srand(time(0));
 
 	Gamefield gamefield;
+	clock_t delay = 60;
+	clock_t start;
 	while (!gamefield.GameOver())
 	{
+		start = clock();
 		gamefield.Initialize();
 		gamefield.Show();
-		Sleep(30);
+		while (clock() - start < delay);		
 	}
 	cout << "GameOver!\n";
 	system("pause");

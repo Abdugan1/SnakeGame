@@ -9,8 +9,10 @@ class Gamefield
 private:
 	Snake _snake;
 	Fruit _fruit;
+	size_t _score;
 	std::vector<std::vector<char>> _field;
 	bool FruitWasEaten();
+	void GenerateFruit();
 	bool _game_status;
 public:
 	Gamefield();

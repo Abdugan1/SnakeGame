@@ -7,6 +7,7 @@ void Gamefield::Initialize()
 	{
 		_snake.Grow();
 		_fruit.GetNewPos();
+		_score += 10;
 	}
 	else if (_field[_snake.Head().y][_snake.Head().x] == 'o')
 	{
@@ -21,10 +22,10 @@ void Gamefield::Initialize()
 			current = { j, i };
 			if (current == _snake.Head())
 			{
-				snake_pos = _snake.Head();
-				_field[snake_pos.y][snake_pos.x] = 'O';
+				_field[i][j] = 'O';
 				continue;
 			}
+
 			for (size_t k = 1; k < _snake.Size(); k++)
 			{
 				snake_pos = _snake.Pos(k);
@@ -33,17 +34,22 @@ void Gamefield::Initialize()
 			_field[i][j] = ' ';
 		}
 	}
-	Position fruit_pos = _fruit.Pos();
-	while (_field[fruit_pos.y][fruit_pos.x] == 'O' && _field[fruit_pos.y][fruit_pos.x] == 'o')
-	{
-		fruit_pos = _fruit.GetNewPos();
-	}
-	_field[fruit_pos.y][fruit_pos.x] = 'a';
+	GenerateFruit();
 }
 
 bool Gamefield::FruitWasEaten()
 {
 	return _snake.Head() == _fruit.Pos();
+}
+
+void Gamefield::GenerateFruit()
+{
+	Position fruit_pos = _fruit.Pos();
+	while (_field[fruit_pos.y][fruit_pos.x] == 'O' || _field[fruit_pos.y][fruit_pos.x] == 'o')
+	{
+		fruit_pos = _fruit.GetNewPos();
+	}
+	_field[fruit_pos.y][fruit_pos.x] = 'a';
 }
 
 Gamefield::Gamefield() : _field(HEIGHT)
@@ -73,8 +79,8 @@ Gamefield::Gamefield() : _field(HEIGHT)
 		_field[HEIGHT - 1][i] = '#';
 	}
 
-	Position snake_head = _snake.Head();
 	_game_status = false;
+	_score = 0;
 }
 
 void Gamefield::Show()
@@ -89,5 +95,6 @@ void Gamefield::Show()
 		}
 		Gamefield_str += '\n';
 	}
-	std::cout << Gamefield_str << std::endl;
+	std::cout << Gamefield_str;
+	std::cout << "Score: " << _score << std::endl;
 }
