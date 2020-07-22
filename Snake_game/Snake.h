@@ -1,11 +1,12 @@
 #pragma once
 #include <conio.h>
+#include <vector>
 #include "Ñonstants.h"
 #include "Tail.h"
 class Snake
 {
 private:
-	Tail* _head;
+	std::vector<Tail> _tail;
 	size_t _size;
 	enum Direction
 	{
@@ -21,9 +22,9 @@ public:
 
 	void Move();
 	void Grow();
-	const Position& Head() const { return _head->_pos; }
+	const Position& Head() const { return _tail[0]._pos; }
 	const size_t& Size() const { return _size; }
-	Position& Pos(const int& index) const;
-	Position& PrevPos(const int& index) const;
+	Position& Pos(const int& index);
+	Position& PrevPos(const int& index);
 };
 

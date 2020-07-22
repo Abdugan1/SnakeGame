@@ -22,12 +22,7 @@ void Gamefield::Initialize()
 			if (current == _snake.Head())
 			{
 				snake_pos = _snake.Head();
-				_field[snake_pos.y][snake_pos.x] = '@';
-				continue;
-			}
-			else if (current == _fruit.Pos())
-			{
-				_field[i][j] = 'a';
+				_field[snake_pos.y][snake_pos.x] = 'O';
 				continue;
 			}
 			for (size_t k = 1; k < _snake.Size(); k++)
@@ -38,6 +33,12 @@ void Gamefield::Initialize()
 			_field[i][j] = ' ';
 		}
 	}
+	Position fruit_pos = _fruit.Pos();
+	while (_field[fruit_pos.y][fruit_pos.x] == 'O' && _field[fruit_pos.y][fruit_pos.x] == 'o')
+	{
+		fruit_pos = _fruit.GetNewPos();
+	}
+	_field[fruit_pos.y][fruit_pos.x] = 'a';
 }
 
 bool Gamefield::FruitWasEaten()

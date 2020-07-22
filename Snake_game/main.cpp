@@ -13,7 +13,7 @@ int main() {
 	{
 		gamefield.Initialize();
 		gamefield.Show();
-		Sleep(20);
+		Sleep(30);
 	}
 	cout << "GameOver!\n";
 	system("pause");

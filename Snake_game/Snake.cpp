@@ -2,7 +2,7 @@
 
 void Snake::MoveLogic()
 {
-	_head->_prev_pos = _head->_pos;
+	_tail[0]._prev_pos = _tail[0]._pos;
 
 	for (size_t i = 1; i < _size; i++)
 	{
@@ -12,16 +12,16 @@ void Snake::MoveLogic()
 
 	switch (_dir)
 	{
-	case UP: _head->_pos.y--; break;
-	case DOWN: _head->_pos.y++; break;
-	case LEFT: _head->_pos.x--; break;
-	case RIGHT: _head->_pos.x++; break;
+	case UP: _tail[0]._pos.y--; break;
+	case DOWN: _tail[0]._pos.y++; break;
+	case LEFT: _tail[0]._pos.x--; break;
+	case RIGHT: _tail[0]._pos.x++; break;
 	}
 
-	if (_head->_pos.x <= 0) { _head->_pos.x = WIDTH - 2; }
-	else if (_head->_pos.x >= WIDTH - 1) { _head->_pos.x = 1; }
-	else if (_head->_pos.y <= 0) { _head->_pos.y = HEIGHT - 2; }
-	else if (_head->_pos.y >= HEIGHT - 1) { _head->_pos.y = 1; }
+	if (_tail[0]._pos.x <= 0) { _tail[0]._pos.x = WIDTH - 2; }
+	else if (_tail[0]._pos.x >= WIDTH - 1) { _tail[0]._pos.x = 1; }
+	else if (_tail[0]._pos.y <= 0) { _tail[0]._pos.y = HEIGHT - 2; }
+	else if (_tail[0]._pos.y >= HEIGHT - 1) { _tail[0]._pos.y = 1; }
 }
 
 void Snake::RotationLogic(const Direction& prev_dir)
@@ -49,7 +49,8 @@ void Snake::RotationLogic(const Direction& prev_dir)
 
 Snake::Snake()
 {
-	_head = new Tail();
+	_tail.reserve(70);
+	_tail.push_back(Tail());
 	_dir = RIGHT;
 	_size = 1;
 }
@@ -73,42 +74,17 @@ void Snake::Move()
 
 void Snake::Grow()
 {
-	Tail* current = _head;
-	while (current->_pNext != nullptr)
-	{
-		current = current->_pNext;
-	}
-	current->_pNext = new Tail();
+	_tail.push_back(_tail[_size - 1]._prev_pos);
 	_size++;
 }
 
-Position& Snake::Pos(const int& index) const
+Position& Snake::Pos(const int& index)
 {
-	int counter = 0;
-	Tail* current = _head;
-	while (current != nullptr)
-	{
-		if (counter == index)
-		{
-			return current->_pos;
-		}
-		current = current->_pNext;
-		counter++;
-	}
+	return _tail[index]._pos;
 }
 
-Position& Snake::PrevPos(const int& index) const
+Position& Snake::PrevPos(const int& index) 
 {
-	int counter = 0;
-	Tail* current = _head;
-	while (current != nullptr)
-	{
-		if (counter == index)
-		{
-			return current->_prev_pos;
-		}
-		current = current->_pNext;
-		counter++;
-	}
+	return _tail[index]._prev_pos;;
 }
 
